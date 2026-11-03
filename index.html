@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dành tặng Khánh Hà</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #ffe6f0 0%, #ffb3d1 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .heart-box {
+            position: relative;
+            width: 300px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            filter: drop-shadow(0 10px 20px rgba(255, 42, 109, 0.35));
+        }
+
+        .half-left, .half-right {
+            fill: #ff2a6d;
+            stroke: #ff2a6d;
+            stroke-width: 2px;
+            transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Trạng thái ban đầu: 2 nửa trái tim tách rời */
+        .half-left {
+            transform: translate(-65px, -15px) rotate(-18deg);
+            transform-origin: 100px 110px;
+        }
+
+        .half-right {
+            transform: translate(65px, -15px) rotate(18deg);
+            transform-origin: 100px 110px;
+        }
+
+        /* Khi bấm Đồng ý: 2 nửa ghép khít lại */
+        .merged .half-left,
+        .merged .half-right {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        /* Hiệu ứng nhịp đập sau khi ghép xong */
+        .merged svg {
+            animation: heartbeat 1.2s infinite 1.2s;
+        }
+
+        /* Chữ Khánh Hà ẩn lúc đầu */
+        .name-text {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 2px 10px rgba(180, 0, 60, 0.6);
+            opacity: 0;
+            transition: all 0.8s ease 1s;
+            pointer-events: none;
+        }
+
+        /* Chữ hiện lên sau khi trái tim ghép lại */
+        .merged .name-text {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff2a6d, #ff6b9d);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 42, 109, 0.4);
+            transition: transform 0.2s, opacity 0.5s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-box" id="heartBox">
+        <svg viewBox="0 0 200 200">
+            <!-- Nửa trái tim bên trái -->
+            <path class="half-left" d="M 100,55 C 80,15 15,20 15,75 C 15,120 65,150 100,185 Z" />
+            <!-- Nửa trái tim bên phải -->
+            <path class="half-right" d="M 100,55 C 120,15 185,20 185,75 C 185,120 135,150 100,185 Z" />
+        </svg>
+        <div class="name-text">Khánh Hà</div>
+    </div>
+
+    <button id="agreeBtn" onclick="ghepTraiTim()">Đồng ý 💖</button>
+
+    <script>
+        function ghepTraiTim() {
+            document.getElementById('heartBox').classList.add('merged');
+            document.getElementById('agreeBtn').classList.add('hidden');
+        }
+    </script>
+
+</body>
+</html>
